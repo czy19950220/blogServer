@@ -1,6 +1,5 @@
 let express = require('express');
 let router = express.Router();
-
 // 导入MySQL模块
 let mysql = require('mysql');
 let dbConfig = require('../config/db');
@@ -8,8 +7,8 @@ let userSQL = require('../config/mysql');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 let pool = mysql.createPool(dbConfig.mysql);
 let FroalaEditor = require('../node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
-let serverIP = 'http://czy-15736873451.club:15914';
-let serverIP2 = 'http://localhost:3000';
+let serverIP = 'http://47.103.42.176:11365';
+let serverIP2 = 'http://localhost:3003';
 
 //froala-editor img
 //如果想要在自己的电脑上跑后台，需要修改后台代码的froala.js 里的‘http://192.168.100.135:3003’，将其修改为自己的地址
@@ -28,7 +27,7 @@ router.post('/upload_images/', (req, res) => {
     });
 });
 router.route('/deleteImage').post(function (req, res) {
-    console.log(req.body.src)
+    //console.log(req.body.src)
     FroalaEditor.Image.delete(req.body.src.replace(`${serverIP}/`, ""), function (err) {
         if (err) {
             console.log(err)

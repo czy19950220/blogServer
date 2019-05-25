@@ -1,6 +1,6 @@
 // var mysql = require('mysql');
 // var config = require('./d;b')
-var UserSQL = {
+let UserSQL = {
     login: 'SELECT * FROM user WHERE user_name = ? ',
     register: 'INSERT INTO user(user_name,password) VALUES (?,?)',
     getHtml: 'SELECT * FROM blog WHERE blogID = ? ',
