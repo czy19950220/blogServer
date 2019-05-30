@@ -7,7 +7,8 @@ let userSQL = require('../config/mysql');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 let pool = mysql.createPool(dbConfig.mysql);
 let FroalaEditor = require('../node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
-let serverIP = 'http://47.103.42.176:11365';
+let serverIP = 'http://czy-15736873451.club:11365';
+//let serverIP = 'http://47.103.42.176:11365';
 let serverIP2 = 'http://localhost:3003';
 
 //froala-editor img
@@ -44,6 +45,8 @@ router.route('/listpic').get((req, res) => {
         for (let i = 0; i < data.length; i++) {
             data[i].thumb = serverIP+'/public/images/' + data[i].tag;
             data[i].url = serverIP+'/public/images/' + data[i].tag;
+            //http://czy-15736873451.club:11365/public/images/4af5894cd3871f628b15e4bec9bab9d1f10562b6.png
+            console.log(data[i].url)
         }
         return res.send(data);
     });
