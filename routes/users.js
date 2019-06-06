@@ -35,7 +35,12 @@ router.post('/', function (req, res, next) {
             } else {
                 //req.session.user = user;
                 //jwToken.sign('规则','加密名字','过期时间','箭头函数');
-                let rule = {name: user, id: rows[0].userID, identity: rows[0].identity};
+                let rule = {
+                    name: user,
+                    id: rows[0].userID,
+                    identity: rows[0].identity,
+                    photo: rows[0].photo
+                };
                 jwt.sign(rule, sceret, {expiresIn: '7d'}, (err, token) => {
                     if (err) throw err;
                     res.json({
