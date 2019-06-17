@@ -7,7 +7,7 @@ let userSQL = require('../config/mysql');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 let pool = mysql.createPool(dbConfig.mysql);
 let FroalaEditor = require('../node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
-let serverIP = 'http://czy-15736873451.club:11365';
+let serverIP = 'http://47.103.42.176:19680';
 //let serverIP = 'http://47.103.42.176:11365';
 let serverIP2 = 'http://localhost:3003';
 
