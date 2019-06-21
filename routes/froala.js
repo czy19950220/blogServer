@@ -1,5 +1,7 @@
 let express = require('express');
 let router = express.Router();
+let path = require('path');
+let fs = require('fs');
 // 导入MySQL模块
 let mysql = require('mysql');
 let dbConfig = require('../config/db');
@@ -11,21 +13,36 @@ let serverIP = 'http://47.103.42.176:19680';
 //let serverIP = 'http://47.103.42.176:11365';
 let serverIP2 = 'http://localhost:3003';
 
-//froala-editor img
-//如果想要在自己的电脑上跑后台，需要修改后台代码的froala.js 里的‘http://192.168.100.135:3003’，将其修改为自己的地址
+function dirExists(dir, cb) {
+    let pathinfo = path.parse(dir)
+    if (!fs.existsSync(pathinfo.dir)) {
+        console.log(!fs.existsSync(pathinfo.dir))
+        dirExists(pathinfo.dir,function() {
+            fs.mkdirSync(pathinfo.dir)
+        })
+    }
+    cb && cb()
+}
 
+//froala-editor img
+//如果想要在自己的电脑上跑后台，需要修改后台代码的froala.js 里的‘http://192.168.100.135:3003’，将其修改为自己的地
 router.post('/upload_images/', (req, res) => {
-    FroalaEditor.Image.upload(req, '../public/images/', function (err, data) {
-        // Return data.
-        if (err) {
-            //console.log(err)
-            return res.send(JSON.stringify(err));
-        }
-        //data.link='http://192.168.100.135:3003'+data.link.replace("..","");
-        data.link = serverIP + data.link.replace("..", "");
-        //console.log(data)
-        res.send(data);
-    });
+    dirExists(path.join(__dirname, `/${req.query.id}/images/${req.query.id}`),()=>{
+        FroalaEditor.Image.upload(req, `../routes/${req.query.id}/images/`, function (err, data) {
+            // Return data.
+
+            if (err) {
+                console.log(err)
+                return res.send(JSON.stringify(err));
+            }
+            console.log(data)
+            //data.link='http://192.168.100.135:3003'+data.link.replace("..","");
+            data.link = serverIP + data.link.replace("..", "");
+
+            res.send(data);
+        });
+    })
+
 });
 router.route('/deleteImage').post(function (req, res) {
     //console.log(req.body.src)
@@ -146,5 +163,12 @@ router.route('/uploadHtml').post((req, res) => {
         }
     })
 })
+
+/**
+ * 同步递归创建路径
+ *
+ * @param  {string} dir   处理的路径
+ * @param  {function} cb  回调函数
+ */
 
 module.exports = router;
