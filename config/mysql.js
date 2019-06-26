@@ -4,8 +4,10 @@ let UserSQL = {
     login: 'SELECT * FROM user WHERE user_name = ? ',
     register: 'INSERT INTO user(user_name,password) VALUES (?,?)',
     getHtml: 'SELECT * FROM blog WHERE blogID = ? ',
-    updateHtml: 'UPDATE blog SET blogContent=?,blogName=? where blogID=?',
-    insertHtml: 'INSERT INTO blog(blogContent,blogName,uid) VALUES (?,?,?)',
+    updateHtml: 'UPDATE blog SET blogContent=?,blogName=?,text=? where blogID=?',
+    insertHtml: 'INSERT INTO blog(blogContent,blogName,uid,date,text) VALUES (?,?,?,?,?)',
+    getBlogs: 'SELECT * FROM blog WHERE uid = ? ',
+    deleteBlog: 'DELETE FROM blog WHERE blogID = ? ',
 
     insert: 'INSERT INTO user(id,name,age) VALUES (?,?,?)',
     queryAll: 'SELECT * FROM mom_newborn  where flag=0 order by BornDate desc',
