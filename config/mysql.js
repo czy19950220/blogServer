@@ -8,6 +8,7 @@ let UserSQL = {
     insertHtml: 'INSERT INTO blog(blogContent,blogName,uid,date,text) VALUES (?,?,?,?,?)',
     getBlogs: 'SELECT * FROM blog WHERE uid = ? ',
     deleteBlog: 'DELETE FROM blog WHERE blogID = ? ',
+    updateBlog: 'UPDATE blog SET blogName = ?,text = ? WHERE blogID = ? ',
 
     insert: 'INSERT INTO user(id,name,age) VALUES (?,?,?)',
     queryAll: 'SELECT * FROM mom_newborn  where flag=0 order by BornDate desc',

@@ -185,7 +185,7 @@ router.route('/uploadHtml').post((req, res) => {
         })
     })
 })
-
+//获取全部博客信息
 router.route('/getBlogs').post((req, res) => {
     let uid = req.body.uid;
     pool.getConnection(function (err, connection) {
@@ -210,6 +210,7 @@ router.route('/getBlogs').post((req, res) => {
         })
     })
 })
+//删除博客
 router.route('/deleteBlog').post((req, res) => {
     let blogID = req.body.blogID;
     pool.getConnection(function (err, connection) {
@@ -218,6 +219,27 @@ router.route('/deleteBlog').post((req, res) => {
                 res.send(500);
                 console.log(err);
             }
+            if (result.affectedRows == 1){
+                res.send('200')
+            }else {
+                res.send('-1')
+            }
+            connection.release();
+        })
+    })
+})
+//修改博客信息
+router.route('/updateBlog').post((req, res) => {
+    let name = req.body.name;
+    let text = req.body.text;
+    let blogID = req.body.blogID;
+    pool.getConnection(function (err, connection) {
+        connection.query(userSQL.deleteBlog, blogID, function (err, result) {
+            if (err) {
+                res.send(500);
+                console.log(err);
+            }
+            console.log(result)
             if (result.affectedRows == 1){
                 res.send('200')
             }else {
