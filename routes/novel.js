@@ -11,31 +11,37 @@ let pool = mysql.createPool(dbConfig.mysql);
 let serverIP = 'http://118.25.73.39:3003';
 let axios = require('axios');
 
-router.post('/search', (req, res) => {
-    let url = 'http://m.b5200.net/modules/article/waps.php?keyword=%E4%B8%80%E5%93%81%E9%81%93%E9%97%A8';
-    params = {};
-    axios.defaults.headers.get['Content-Type'] = 'application/json;charse=gbk';
+let http = require('http');
+let iconv = require('iconv-lite');//转码
+let request = require('request');
+let cheerio = require('cheerio');//DOM
 
-    axios({
-        method: 'get',
-        url: url,
-        headers: {
-            'Content-type': 'application/x-www-form-urlencoded;charse=gbk'
+
+router.get('/search', (req, res) => {
+    let url = 'http://m.b5200.net/modules/article/waps.php?keyword=' + encodeURI('一');
+    request.get({url: url, encoding: null}, function (err, response, body) {
+        let buf = iconv.decode(body, 'gbk');
+        let $ = cheerio.load(buf);
+        //console.log($('.line a').text());
+        //console.log($('html').html());
+        let arr = [],
+            arr2 = [],
+            result1 = [],
+            result2 = [];
+        $('.line a').each(function (index, el) {
+            //console.log($(this).text())
+            arr.push($(this).attr('href'))
+            arr2.push($(this).text())
+        });
+        for(let i=0;i<arr.length;i+=3){
+            result1.push(arr.slice(i,i+3));
+            result2.push(arr2.slice(i,i+3));
         }
-    }).then((response) => {
-        console.log(response.data);
-        let reader = new FileReader();
-        reader.readAsText(response.data, "GBK");
-        reader.onload = function(e) {
-            console.log(reader.result);
-            res.json({
-                result: reader.result
-            })
-        };
-    }).catch((error) => {
-            console.log(error);
-        }
-    );
+        res.json({
+            data: result1,
+            data2: result2
+        })
+    });
 
 });
 
