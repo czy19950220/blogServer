@@ -122,6 +122,7 @@ router.route('/getHtml').post((req, res) => {
                 res.send(500);
                 console.log(err);
             }
+            //console.log(result)
             if (result.length !== 1) {
                 res.json({
                     result: {

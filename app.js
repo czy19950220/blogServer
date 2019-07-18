@@ -14,6 +14,7 @@ const passport = require('passport');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let froalaRouter = require('./routes/froala');
+let novelRouter = require('./routes/novel');
 
 
 let app = express();
@@ -43,10 +44,10 @@ app.use(session({
 }));
 
 app.use(logger('dev'));
-app.use(express.json());
+/*app.use(express.json());*/
 app.use(express.static(__dirname + '/'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({limit: "1050mb"}));
+app.use(bodyParser.urlencoded({limit: "1050mb", extended: true}));
 /*app.use(express.urlencoded({ extended: false }));*/
 app.use(express.static(path.join(__dirname, 'public')));
 // passport 初始化
@@ -58,6 +59,7 @@ app.use('/bower_components', express.static(path.join(__dirname, '../bower_compo
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/froala', froalaRouter);
+app.use('/novel', novelRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
