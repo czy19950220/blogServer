@@ -18,6 +18,7 @@ let novelRouter = require('./routes/novel');
 
 
 let app = express();
+let address = require('address');
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -25,6 +26,7 @@ app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header("X-Powered-By", ' 3.2.1')
+    console.log(req.ip.match(/\d+\.\d+\.\d+\.\d+/)[0]);
     if (req.method == "OPTIONS") res.send(200);/*让options请求快速返回*/
     else next();
 });

@@ -17,8 +17,9 @@ let request = require('request');
 let cheerio = require('cheerio');//DOM
 
 
-router.get('/search', (req, res) => {
-    let url = 'http://m.b5200.net/modules/article/waps.php?keyword=' + encodeURI('一');
+router.post('/search', (req, res) => {
+    let searchText = req.body.searchText;
+    let url = 'http://m.b5200.net/modules/article/waps.php?keyword=' + encodeURI(searchText);
     request.get({url: url, encoding: null}, function (err, response, body) {
         let buf = iconv.decode(body, 'gbk');
         let $ = cheerio.load(buf);

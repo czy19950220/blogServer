@@ -9,9 +9,9 @@ let userSQL = require('../config/mysql');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 let pool = mysql.createPool(dbConfig.mysql);
 let FroalaEditor = require('../node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
-let serverIP = 'http://118.25.73.39:3003';
+let serverIP = 'https://czy-15736873451.club:3003';
 //let serverIP = 'http://47.103.42.176:11365';
-let serverIP2 = 'http://localhost:3003';
+let serverIP2 = 'https://localhost:3003';
 
 
 /**
@@ -114,7 +114,7 @@ router.route('/uploadvideo').post((req, res) => {
 //froala-editor 重新加载HTML代码
 router.route('/getHtml').post((req, res) => {
     pool.getConnection(function (err, connection) {
-        let blogID = req.query.blogID || 1;
+        let blogID = req.query.id || 1;
         console.log(blogID)
         connection.query(userSQL.getHtml, blogID, function (err, result) {
             //console.log(result)
@@ -150,7 +150,7 @@ router.route('/uploadHtml').post((req, res) => {
     pool.getConnection(function (err, connection) {
         let gethtml = req.body.html;
         let titleName = req.body.titleName;
-        let blogID = req.body.blogID;//数据库有没有该文章
+        let blogID = req.body.id;//数据库有没有该文章
         let uid = req.body.uid;//文章拥有人id
         let blogNameTag = req.body.blogNameTag;//文章标签
         connection.query(userSQL.getHtml, blogID, function (err, result) {
@@ -168,7 +168,11 @@ router.route('/uploadHtml').post((req, res) => {
                     //console.log(gethtml)
                     //console.log(getUrl)
                     connection.release();
-                    res.send('2');
+                    console.log(result)
+                    res.json({
+                        insertId: result.insertId,
+                        data: '2'
+                    })
                 });
             } else {
                 connection.query(userSQL.updateHtml, [gethtml, titleName, blogNameTag, blogID], function (err, result) {
@@ -180,7 +184,11 @@ router.route('/uploadHtml').post((req, res) => {
                     //console.log(gethtml)
                     //console.log(getUrl)
                     connection.release();
-                    res.send('1');
+                    console.log(result)
+                    res.json({
+                        insertId: result.insertId,
+                        data: '1'
+                    })
                 });
             }
         })

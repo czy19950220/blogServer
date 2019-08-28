@@ -9,6 +9,7 @@ let UserSQL = {
     getBlogs: 'SELECT * FROM blog WHERE uid = ? ',
     deleteBlog: 'DELETE FROM blog WHERE blogID = ? ',
     updateBlog: 'UPDATE blog SET blogName = ?,text = ? WHERE blogID = ? ',
+    insertIP:   'INSERT INTO user_ip(userIP) VALUES (?)',
 
     insert: 'INSERT INTO user(id,name,age) VALUES (?,?,?)',
     queryAll: 'SELECT * FROM mom_newborn  where flag=0 order by BornDate desc',

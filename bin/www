@@ -8,6 +8,20 @@ var app = require('../app');
 var debug = require('debug')('blogserver:server');
 var http = require('http');
 
+/*
+HTTPS
+*/
+var fs = require('fs');
+var https = require('https');
+/*
+密钥文件
+* */
+const httpsOption = {
+    key : fs.readFileSync("./bin/2_czy-15736873451.club.key"),
+    cert: fs.readFileSync("./bin/1_czy-15736873451.club_bundle.crt")
+}
+
+
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +33,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer(httpsOption,app);
 
 /**
  * Listen on provided port, on all network interfaces.
