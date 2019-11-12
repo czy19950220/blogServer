@@ -53,6 +53,7 @@ router.post('/', function (req, res, next) {
             // do sth. with result in rows
         })
         .catch(e => {
+            console.log(e)
             res.send('err')
             // handle errors
         })

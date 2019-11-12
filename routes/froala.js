@@ -175,7 +175,8 @@ router.route('/uploadHtml').post((req, res) => {
                     })
                 });
             } else {
-                connection.query(userSQL.updateHtml, [gethtml, titleName, blogNameTag, blogID], function (err, result) {
+                //console.log(result)
+                connection.query(userSQL.updateHtml, [gethtml, titleName, blogNameTag, blogID], function (err, result2) {
                     //console.log(result)
                     if (err) {
                         res.send(500);
@@ -183,12 +184,13 @@ router.route('/uploadHtml').post((req, res) => {
                     }
                     //console.log(gethtml)
                     //console.log(getUrl)
-                    connection.release();
-                    console.log(result)
+
+                    //console.log('result2'+result)
                     res.json({
                         insertId: result.insertId,
                         data: '1'
                     })
+                    connection.release();
                 });
             }
         })
