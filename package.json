@@ -35,7 +35,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pm2": "^3.5.1",
+    "pm2": "^5.2.0",
     "serve-favicon": "~2.4.5",
     "wysiwyg-editor-node-sdk": "^2.3.4"
   },
